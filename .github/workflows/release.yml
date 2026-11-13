@@ -1,9 +1,5 @@
 name: Build Release
 
-# Builds a .zip and .unitypackage for the version in package.json, publishes a
-# GitHub release tagged "v<version>" and then asks the VPM listing to rebuild.
-# Runs automatically when package.json changes on main. A version that already
-# has a release tag is skipped, bumping the version is what publishes.
 on:
   workflow_dispatch:
   push:
@@ -63,8 +59,6 @@ jobs:
           echo "zipFile=${packageFileName}_v${version}.zip" >> "$GITHUB_ENV"
           echo "unityPackage=${packageFileName}_v${version}.unitypackage" >> "$GITHUB_ENV"
 
-      # The .unitypackage must contain paths starting with Packages/<name>/ so
-      # Unity imports it as a package, so the repo is staged under that folder.
       - name: Stage package under Packages/
         run: |
           mkdir -p "$packagePath"
@@ -103,8 +97,6 @@ jobs:
             ${{ env.unityPackage }}
             package.json
 
-  # Releases created with GITHUB_TOKEN do not fire "release" events, so the
-  # listing update is called directly instead of relying on that trigger.
   update-listing:
     name: Update VPM listing
     needs: build

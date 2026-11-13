@@ -1,11 +1,5 @@
 name: Update VPM Listing
 
-# Asks hfcRed/VPM-Listing to rebuild its index so it picks up the latest
-# release. Needs the VPM secret, a fine-grained personal access token
-# for the VPM-Listing repository with "Actions: Read and write" permission.
-#
-# Called by release.yml after a release is built, and also runs when a release
-# is published, edited or deleted by hand on GitHub.
 on:
   workflow_call:
   workflow_dispatch:
